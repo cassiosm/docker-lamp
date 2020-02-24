@@ -1,5 +1,18 @@
 version: '1'
 services:
+  apache:
+    image: 'php:5.5-apache'
+    container_name: php
+    restart: always
+    ports:
+      - '80:80'
+    volumes:
+      - ./html:/var/www/html
+    depends_on:
+      - db
+    links:
+      - db
+      
 db:
   image: mariadb:10.3.10
   restart: always
@@ -13,15 +26,5 @@ db:
   ports:
     - "8889:3306"
     
-  php: 
-    image: php:5.5
-    expose:
-        - "9000"
-    valumes:
-        - ./app:/var/www/app
-        - ./logs/app:/var/www/app/logs
-    links:
-        - db
-
 
     
