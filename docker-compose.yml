@@ -1,0 +1,27 @@
+version: '1'
+services:
+db:
+  image: mariadb:10.3.10
+  restart: always
+  volumes:
+    - ./mysql:/var/lib/mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_USER: admin
+    MYSQL_PASSWORD: test
+    MYSQL_DATABASE: bancodedados
+  ports:
+    - "8889:3306"
+    
+  php: 
+    image: php:5.5
+    expose:
+        - "9000"
+    valumes:
+        - ./app:/var/www/app
+        - ./logs/app:/var/www/app/logs
+    links:
+        - db
+
+
+    
