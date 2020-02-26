@@ -1,4 +1,3 @@
-version: '1'
 services:
   apache:
     image: 'defconjuan/docker-php-5.5'
