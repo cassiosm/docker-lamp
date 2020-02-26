@@ -1,7 +1,7 @@
 version: '1'
 services:
   apache:
-    image: 'php:5.5-apache'
+    image: 'defconjuan/docker-php-5.5'
     container_name: php
     restart: always
     ports:
