@@ -25,5 +25,19 @@ db:
   ports:
     - "8889:3306"
     
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  container_name: phpmyadmin
+  environment:
+    - PMA_ARBITRARY=1
+    - PMA_HOST=db
+  restart: always
+  ports:
+    - 8080:8080
+  volumes:
+    - /sessions
+  links:
+    - db
+    
 
     
