@@ -1,18 +1,14 @@
-services:
-  apache:
-    image: 'defconjuan/docker-php-5.5'
-    container_name: php
+web:
+    image: 'webimp/php-55-apache'
     restart: always
     ports:
-      - '80:80'
+      - '8080:8080'
     volumes:
       - ./html:/var/www/html
-    depends_on:
-      - db
     links:
-      - db
+      - mariadb
       
-db:
+mariadb:
   image: mariadb:10.3.10
   restart: always
   volumes:
@@ -30,14 +26,12 @@ phpmyadmin:
   container_name: phpmyadmin
   environment:
     - PMA_ARBITRARY=1
-    - PMA_HOST=db
+    - PMA_HOST=mariadb
   restart: always
   ports:
-    - 8080:8080
+    - 80:80
   volumes:
     - /sessions
   links:
-    - db
-    
-
+    - mariadb
     
