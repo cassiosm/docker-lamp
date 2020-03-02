@@ -2,36 +2,32 @@ web:
     image: 'webimp/php-55-apache'
     restart: always
     ports:
-      - '8080:8080'
+      - "80:80"
     volumes:
       - ./html:/var/www/html
     links:
       - mariadb
+      - phpmyadmin
       
 mariadb:
   image: mariadb:10.3.10
   restart: always
   volumes:
-    - ./mysql:/var/lib/mysql
+    - ./mariadb:/var/lib/mariadb
   environment:
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_USER: admin
-    MYSQL_PASSWORD: test
-    MYSQL_DATABASE: bancodedados
+    MYSQL_ROOT_PASSWORD: pw
+    MYSQL_USERNAME: esteio
+    MYSQL_PASSWORD: esteio123
   ports:
     - "8889:3306"
     
 phpmyadmin:
   image: phpmyadmin/phpmyadmin
-  container_name: phpmyadmin
-  environment:
-    - PMA_ARBITRARY=1
-    - PMA_HOST=mariadb
-  restart: always
-  ports:
-    - 80:80
-  volumes:
-    - /sessions
   links:
     - mariadb
-    
+  environment:
+    - PMA_HOST=mariadb
+  ports:
+    - "8080:80"
+  volumes:
+    - /sessions
